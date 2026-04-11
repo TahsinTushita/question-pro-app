@@ -1,0 +1,8 @@
+:root {
+  box-sizing: border-box;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+}
