@@ -1,5 +1,12 @@
+import { Link } from "react-router-dom";
+
 const CreateForm = () => {
-  return <h1>Create Form</h1>;
+  return (
+    <section>
+      <h1>Create Form</h1>
+      <Link to="/todos">todos</Link>
+    </section>
+  );
 };
 
 export default CreateForm;

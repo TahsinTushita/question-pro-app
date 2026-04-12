@@ -1,5 +1,4 @@
 export const statusList = [
-  { id: 201, username: "All" },
-  { id: 202, username: "Completed" },
-  { id: 203, username: "Pending" },
+  { id: 2001, status: "Completed" },
+  { id: 2002, status: "Pending" },
 ];

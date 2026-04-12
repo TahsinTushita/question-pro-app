@@ -1,4 +1,4 @@
-import Home from "./Home";
+import Home from "./Home/Home";
 import TodoList from "./TodoList/TodoList";
 import CreateForm from "./CreateForm";
 import PreviewForm from "./PreviewForm";

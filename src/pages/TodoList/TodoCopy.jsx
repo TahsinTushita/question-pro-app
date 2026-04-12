@@ -10,9 +10,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import styles from "./TodoList.module.css";
 
-const BUILD_FORM_URL = "/form-builder";
-const PREVIEW_FORM_URL = "/form-preview";
-
 const TodoList = () => {
   const ALL = "All";
   const USER_LABEL = "User";
@@ -92,39 +89,27 @@ const TodoList = () => {
     <section className="container">
       <h1>Todo List</h1>
 
-      <div className={styles.todolist_filter_btns}>
-        <div className={styles.todolist_filter_btn}>
-          {/* filter by username */}
-          <Filter
-            label={USER_LABEL}
-            itemList={[{ id: 1003, username: ALL }, ...userList]}
-            selectedItem={selectedUser}
-            handleFilterItem={handleFilterItem}
-            valueKey="username"
-          />
+      <div className={styles.todolist_filters}>
+        {/* filter by username */}
+        <Filter
+          label={USER_LABEL}
+          itemList={[{ id: 1003, username: ALL }, ...userList]}
+          selectedItem={selectedUser}
+          handleFilterItem={handleFilterItem}
+          valueKey="username"
+        />
 
-          {/* filter by status */}
-          <Filter
-            label={STATUS_LABEL}
-            itemList={[{ id: 1004, status: ALL }, ...statusList]}
-            selectedItem={selectedStatus}
-            handleFilterItem={handleFilterItem}
-            valueKey="status"
-          />
-        </div>
+        {/* filter by status */}
+        <Filter
+          label={STATUS_LABEL}
+          itemList={[{ id: 1004, status: ALL }, ...statusList]}
+          selectedItem={selectedStatus}
+          handleFilterItem={handleFilterItem}
+          valueKey="status"
+        />
 
-        <div className={styles.todolist_filter_btn}>
-          <button className="common_btn">
-            <Link to={BUILD_FORM_URL} className="common_link">
-              Create form
-            </Link>
-          </button>
-          <button className="common_btn">
-            <Link to={PREVIEW_FORM_URL} className="common_link">
-              Preview form
-            </Link>
-          </button>
-        </div>
+        <Link to="/form-builder">Create form</Link>
+        <Link to="/form-preview">Preview form</Link>
       </div>
 
       <ul className={styles.todolist}>

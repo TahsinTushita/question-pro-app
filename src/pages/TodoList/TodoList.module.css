@@ -1,13 +1,22 @@
-.todolist_filters {
+.todolist_filter_btns {
   display: flex;
-  margin-bottom: 20px;
+  flex-direction: column;
   gap: 10px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.todolist_filter_btn {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .todolist {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 20px 0;
   display: grid;
   grid-template-columns: repeat(1, 100%);
   gap: 10px;
@@ -19,8 +28,18 @@
 }
 
 @media (min-width: 600px) {
+  .todolist_filter_btn {
+    flex-direction: row;
+  }
+
   .todolist {
     grid-template-columns: repeat(2, 50%);
+  }
+}
+
+@media (min-width: 800px) {
+  .todolist_filter_btns {
+    flex-direction: row;
   }
 }
 

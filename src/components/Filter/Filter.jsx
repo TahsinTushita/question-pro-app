@@ -1,6 +1,12 @@
 import styles from "./Filter.module.css";
 
-const Filter = ({ label, itemList, selectedItem, handleFilterItem }) => {
+const Filter = ({
+  label,
+  itemList,
+  selectedItem,
+  handleFilterItem,
+  valueKey,
+}) => {
   return (
     <div className={styles.filter}>
       <label htmlFor="item" className={styles.filter__label}>
@@ -12,13 +18,13 @@ const Filter = ({ label, itemList, selectedItem, handleFilterItem }) => {
         className={styles.filter__select}
         onChange={(e) => handleFilterItem(e.target.value, label)}
       >
-        {itemList.map((item) => (
+        {itemList?.map((item) => (
           <option
             key={item.id}
-            value={item.username}
-            selected={item.username === selectedItem}
+            value={item[valueKey]}
+            selected={item[valueKey] === selectedItem}
           >
-            {item.username}
+            {item[valueKey]}
           </option>
         ))}
       </select>
