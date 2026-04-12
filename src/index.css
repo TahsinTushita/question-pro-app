@@ -1,6 +1,7 @@
 :root {
   box-sizing: border-box;
   font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  --primary-blue: #1b3380;
 }
 
 body {
@@ -9,4 +10,11 @@ body {
 
 img {
   max-width: 100%;
+}
+
+.container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }

@@ -1,0 +1,22 @@
+.todo {
+  padding: 5px 5px 10px 10px;
+  text-align: left;
+}
+
+.todo__title {
+  font-weight: bold;
+}
+
+.todo_status,
+.todo_username {
+  font-weight: 600;
+  margin: 0;
+}
+
+.todo_status {
+  margin-bottom: 2px;
+}
+
+.todo_span {
+  font-weight: 400;
+}

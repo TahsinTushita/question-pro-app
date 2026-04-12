@@ -6,7 +6,7 @@ const PREVIEW_FORM_URL = "/form-preview";
 
 const Home = () => {
   return (
-    <main>
+    <main className="container">
       <button>
         <Link to={TODO_URL}>Todo List</Link>
       </button>

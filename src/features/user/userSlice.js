@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../api/axios";
 
 const USER_LIST_URL = "/users";
+const All = "All";
 
 const initialState = {
   isLoading: false,
@@ -13,7 +14,9 @@ const initialState = {
 export const getUserList = createAsyncThunk("getUserList", async () => {
   try {
     const response = await axios.get(USER_LIST_URL);
-    return response.data;
+    let newList = [...response.data];
+    newList.unshift({ id: 1001, username: All });
+    return newList;
   } catch (err) {
     console.log(err);
   }
