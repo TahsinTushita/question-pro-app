@@ -4,14 +4,11 @@ import { Link } from "react-router-dom";
 // import { getTodoListWithUsername } from "../../features/todo/todoSlice";
 // import { getUserList } from "../../features/user/userSlice";
 import { getTodoListWithUsername, getUserList } from "../../api/fetchData";
-import { statusList } from "../../List";
+import { statusList, BUILD_FORM_URL, PREVIEW_FORM_URL } from "../../List";
 import { Todo, Filter } from "../../components";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import styles from "./TodoList.module.css";
-
-const BUILD_FORM_URL = "/form-builder";
-const PREVIEW_FORM_URL = "/form-preview";
 
 const TodoList = () => {
   const ALL = "All";
@@ -85,8 +82,8 @@ const TodoList = () => {
     }
   }
 
-  if (isLoading) return <p>Loading ...</p>;
-  if (error) return <p>Error</p>;
+  // if (isLoading) return <p>Loading ...</p>;
+  // if (error) return <p>Error</p>;
 
   return (
     <section className="container">
@@ -116,7 +113,7 @@ const TodoList = () => {
         <div className={styles.todolist_filter_btn}>
           <button className="common_btn">
             <Link to={BUILD_FORM_URL} className="common_link">
-              Create form
+              Build form
             </Link>
           </button>
           <button className="common_btn">
@@ -129,11 +126,15 @@ const TodoList = () => {
 
       <ul className={styles.todolist}>
         {/* Render the todo list */}
-        {filteredList?.map((todo) => (
-          <li key={todo.id}>
-            <Todo todo={todo} />
-          </li>
-        ))}
+        {isLoading ? (
+          <p className={styles.todolist_loading}>Loading ...</p>
+        ) : (
+          filteredList?.map((todo) => (
+            <li key={todo.id}>
+              <Todo todo={todo} />
+            </li>
+          ))
+        )}
       </ul>
     </section>
   );

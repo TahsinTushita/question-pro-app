@@ -7,13 +7,13 @@
   width: fit-content;
 }
 
-.filter__label {
+.filter_label {
   margin-right: 5px;
   font-size: 1rem;
   font-weight: bold;
 }
 
-.filter__select {
+.filter_select {
   border: none;
   outline: none;
   font-size: 1rem;

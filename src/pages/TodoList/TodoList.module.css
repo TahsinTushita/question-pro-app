@@ -13,6 +13,11 @@
   flex-direction: column;
 }
 
+.todolist_loading {
+  margin: 0 auto;
+  font-size: 1.25rem;
+}
+
 .todolist {
   list-style: none;
   padding: 0;

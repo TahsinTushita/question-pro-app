@@ -9,13 +9,13 @@ const Filter = ({
 }) => {
   return (
     <div className={styles.filter}>
-      <label htmlFor="item" className={styles.filter__label}>
+      <label htmlFor="item" className={styles.filter_label}>
         {label}:
       </label>
       <select
         name="item"
         id="item"
-        className={styles.filter__select}
+        className={styles.filter_select}
         onChange={(e) => handleFilterItem(e.target.value, label)}
       >
         {itemList?.map((item) => (

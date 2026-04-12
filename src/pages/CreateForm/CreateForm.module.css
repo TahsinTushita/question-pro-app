@@ -1,0 +1,58 @@
+.create_form_btns {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.create_form_with_list {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.create_form_form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 20px 10px;
+  border-radius: 5px;
+}
+
+.create_form_row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.create_form_label {
+  font-weight: bold;
+}
+
+.create_form_input {
+  height: 20px;
+  outline-color: var(--primary-blue);
+}
+
+.create_form_list {
+  list-style: none;
+  align-self: flex-start;
+  padding: 0;
+  text-align: start;
+}
+
+.create_form_list_label {
+  font-weight: 600;
+}
+
+@media (min-width: 600px) {
+  .create_form_btns {
+    flex-direction: row;
+  }
+}

@@ -19,7 +19,7 @@ const Home = () => {
         </button>
         <button className="common_btn">
           <Link className="common_link" to={CREATE_FORM_URL}>
-            Create Form
+            Build Form
           </Link>
         </button>
         <button className="common_btn">
