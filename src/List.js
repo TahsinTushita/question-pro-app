@@ -1,3 +1,5 @@
+// page dedicated to lists
+
 export const BUILD_FORM_URL = "/form-builder";
 export const PREVIEW_FORM_URL = "/form-preview";
 export const TODO_LIST_URL = "/todos";
@@ -17,8 +19,4 @@ export const inputTypeList = [
   { id: 307, type: "date" },
   { id: 308, type: "select" },
   { id: 309, type: "checkbox" },
-  // { id: 303, type: "select / dropdown" },
-  // { id: 304, type: "checkbox" },
-  // { id: 305, type: "multiple choice" },
-  // { id: 306, type: "radio button" },
 ];

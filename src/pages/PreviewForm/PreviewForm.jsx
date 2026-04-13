@@ -5,17 +5,31 @@ import { Link } from "react-router-dom";
 import styles from "./PreviewForm.module.css";
 
 const PreviewForm = () => {
+  // const variables
+  const CHECKBOX = "checkbox";
+  const TEXTAREA = "textarea";
+  const SELECT = "select";
+  const TEXT = "text";
+  const PASSWORD = "password";
+  const EMAIL = "email";
+  const TEL = "tel";
+  const NUMBER = "number";
+
   const [inputList, setInputList] = useState();
 
   useEffect(() => {
+    // get input list from localstorage
     const list = JSON.parse(localStorage.getItem("inputList"));
     if (list) setInputList(list);
   }, []);
 
+  // handle input field onChange
   function handleInputChange(val, idx, type) {
     const updatedList = [...inputList];
 
-    if (type !== "checkbox") {
+    // if input is not a "checkbox" - update its value property
+    // but for a "checkbox" - update its checked property
+    if (type !== CHECKBOX) {
       updatedList[idx].value = val;
     } else {
       updatedList[idx].checked = !updatedList[idx].checked;
@@ -24,19 +38,24 @@ const PreviewForm = () => {
     setInputList(updatedList);
   }
 
+  // handle submission
   function handleSubmit(e) {
     e.preventDefault();
 
+    // for every input except "checkbox" - print the value
+    // for "checkbox" - only print the value if checked is true
     console.log(
       inputList.map(
         (item) =>
-          `${item.label}: ${item.type !== "checkbox" ? item.value : item.type === "checkbox" && item.checked ? item.value : ""}`,
+          `${item.label}: ${item.type !== CHECKBOX ? item.value : item.type === CHECKBOX && item.checked ? item.value : ""}`,
       ),
     );
 
     let newList = [...inputList];
+
+    // reset the list
     newList.map((item) =>
-      item.type !== "checkbox" ? (item.value = "") : (item.checked = false),
+      item.type !== CHECKBOX ? (item.value = "") : (item.checked = false),
     );
     setInputList(newList);
     document.getElementById("input-form").reset();
@@ -46,6 +65,7 @@ const PreviewForm = () => {
     <section className="container">
       <h1>Preview Form</h1>
 
+      {/* links to other pages */}
       <div className={styles.preview_form_btns}>
         <button className="common_btn">
           <Link to={BUILD_FORM_URL} className="common_link">
@@ -66,7 +86,8 @@ const PreviewForm = () => {
           id="input-form"
         >
           {inputList?.map((item, idx) =>
-            item.type === "checkbox" ? (
+            // checkbox
+            item.type === CHECKBOX ? (
               <div key={item.id} className={styles.preview_form_checkbox_row}>
                 <input
                   type={item.type}
@@ -88,11 +109,13 @@ const PreviewForm = () => {
                 </label>
               </div>
             ) : (
+              // all inputs except "checkbox"
               <div key={item.id} className={styles.preview_form_row}>
                 <label htmlFor={item.id} className={styles.preview_form_label}>
                   {item.label}
                 </label>
-                {item.type === "textarea" ? (
+                {/* textarea */}
+                {item.type === TEXTAREA ? (
                   <textarea
                     id={item.id}
                     name={item.name}
@@ -103,7 +126,8 @@ const PreviewForm = () => {
                     }
                     required={item.required}
                   />
-                ) : item.type === "select" ? (
+                ) : // select
+                item.type === SELECT ? (
                   <select
                     name={item.name}
                     id={item.id}
@@ -119,11 +143,8 @@ const PreviewForm = () => {
                       </option>
                     ))}
                   </select>
-                ) : item.type === "text" ||
-                  "password" ||
-                  "email" ||
-                  "tel" ||
-                  "number" ? (
+                ) : // text, password, email, tel, number
+                item.type === TEXT || PASSWORD || EMAIL || TEL || NUMBER ? (
                   <input
                     type={item.type}
                     id={item.id}
@@ -140,11 +161,13 @@ const PreviewForm = () => {
             ),
           )}
 
+          {/* submit button */}
           <button type="submit" className="common_btn">
             Submit
           </button>
         </form>
       ) : (
+        // show when the list is empty
         <p>Build a Form in the Build Form page to see the preview!</p>
       )}
     </section>

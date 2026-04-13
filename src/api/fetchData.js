@@ -2,6 +2,8 @@ import axios from "./axios";
 const TODO_LIST_URL = "/todos";
 const USER_LIST_URL = "/users";
 
+// async function for fetching data
+
 export const getUserList = async () => {
   try {
     const response = await axios.get(USER_LIST_URL);
