@@ -47,6 +47,9 @@
   align-self: flex-start;
   padding: 0;
   text-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .create_form_list_label {
@@ -58,8 +61,61 @@
   text-transform: capitalize;
 }
 
+.create_form_options_div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create_form_options_add {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.create_form_options_pills {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.create_form_options_pill {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  text-transform: lowercase;
+  padding: 5px 15px;
+  background-color: rgb(211, 208, 208);
+  color: black;
+  border-radius: 100px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  font-size: 0.75rem;
+}
+
+.create_form_list_item {
+  border-bottom: 1px solid black;
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
 @media (min-width: 600px) {
   .create_form_btns {
+    flex-direction: row;
+  }
+
+  .create_form_options_add {
+    flex-direction: row;
+  }
+
+  .create_form_list_item {
     flex-direction: row;
   }
 }

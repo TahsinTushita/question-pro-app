@@ -12,20 +12,34 @@ const PreviewForm = () => {
     if (list) setInputList(list);
   }, []);
 
-  function handleInputChange(val, idx) {
+  function handleInputChange(val, idx, type) {
     const updatedList = [...inputList];
-    updatedList[idx].value = val;
+
+    if (type !== "checkbox") {
+      updatedList[idx].value = val;
+    } else {
+      updatedList[idx].checked = !updatedList[idx].checked;
+    }
+
     setInputList(updatedList);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(inputList.map((item) => `${item.label}: ${item.value}`));
+    console.log(
+      inputList.map(
+        (item) =>
+          `${item.label}: ${item.type !== "checkbox" ? item.value : item.type === "checkbox" && item.checked ? item.value : ""}`,
+      ),
+    );
 
     let newList = [...inputList];
-    newList.map((item) => (item.value = ""));
+    newList.map((item) =>
+      item.type !== "checkbox" ? (item.value = "") : (item.checked = false),
+    );
     setInputList(newList);
+    document.getElementById("input-form").reset();
   }
 
   return (
@@ -45,39 +59,86 @@ const PreviewForm = () => {
         </button>
       </div>
 
-      {inputList ? (
-        <form onSubmit={handleSubmit} className={styles.preview_form_form}>
-          {inputList?.map((item, idx) => (
-            <div key={item.id} className={styles.preview_form_row}>
-              <label htmlFor={item.id} className={styles.preview_form_label}>
-                {item.label}
-              </label>
-              {item.type === "textarea" ? (
-                <textarea
-                  id={item.id}
-                  name={item.name}
-                  className={styles.preview_form_textarea}
-                  value={item.value}
-                  onChange={(e) => handleInputChange(e.target.value, idx)}
-                  required={item.required}
-                />
-              ) : item.type === "text" ||
-                "password" ||
-                "email" ||
-                "tel" ||
-                "number" ? (
+      {inputList?.length ? (
+        <form
+          onSubmit={handleSubmit}
+          className={styles.preview_form_form}
+          id="input-form"
+        >
+          {inputList?.map((item, idx) =>
+            item.type === "checkbox" ? (
+              <div key={item.id} className={styles.preview_form_checkbox_row}>
                 <input
                   type={item.type}
                   id={item.id}
                   name={item.name}
-                  className={styles.preview_form_input_field}
                   value={item.value}
-                  onChange={(e) => handleInputChange(e.target.value, idx)}
-                  required={item.required}
+                  onChange={(e) =>
+                    handleInputChange(e.target.value, idx, item.type)
+                  }
+                  checked={item.checked}
+                  className={styles.preview_form_checkbox_field}
                 />
-              ) : null}
-            </div>
-          ))}
+
+                <label
+                  htmlFor={item.id}
+                  className={styles.preview_form_checkbox_label}
+                >
+                  {item.label}
+                </label>
+              </div>
+            ) : (
+              <div key={item.id} className={styles.preview_form_row}>
+                <label htmlFor={item.id} className={styles.preview_form_label}>
+                  {item.label}
+                </label>
+                {item.type === "textarea" ? (
+                  <textarea
+                    id={item.id}
+                    name={item.name}
+                    className={styles.preview_form_textarea}
+                    value={item.value}
+                    onChange={(e) =>
+                      handleInputChange(e.target.value, idx, item.type)
+                    }
+                    required={item.required}
+                  />
+                ) : item.type === "select" ? (
+                  <select
+                    name={item.name}
+                    id={item.id}
+                    onChange={(e) =>
+                      handleInputChange(e.target.value, idx, item.type)
+                    }
+                    className={styles.preview_form_input_field}
+                    required={item.required}
+                  >
+                    {item.options.map((option) => (
+                      <option key={option.oid} value={option.value}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                ) : item.type === "text" ||
+                  "password" ||
+                  "email" ||
+                  "tel" ||
+                  "number" ? (
+                  <input
+                    type={item.type}
+                    id={item.id}
+                    name={item.name}
+                    className={styles.preview_form_input_field}
+                    value={item.value}
+                    onChange={(e) =>
+                      handleInputChange(e.target.value, idx, item.type)
+                    }
+                    required={item.required}
+                  />
+                ) : null}
+              </div>
+            ),
+          )}
 
           <button type="submit" className="common_btn">
             Submit
