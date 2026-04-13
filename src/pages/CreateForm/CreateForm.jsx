@@ -13,6 +13,7 @@ const CreateForm = () => {
 
   const [inputLabel, setInputLabel] = useState("");
   const [selectedInput, setSelectedInput] = useState(NONE);
+  const [isRequired, setIsRequired] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [formInputList, setFormInputList] = useState([]);
 
@@ -36,16 +37,22 @@ const CreateForm = () => {
   function handleAddInputField(e) {
     e.preventDefault();
 
-    const inputType = inputTypeList.find((item) => item.type === selectedInput);
-
     let list = [...formInputList];
-    list.push({ uid: list.length + 1, label: inputLabel, ...inputType });
+    list.push({
+      id: selectedInput + (list.length + 1).toString(),
+      name: selectedInput + (list.length + 1).toString(),
+      label: inputLabel,
+      type: selectedInput,
+      value: "",
+      required: isRequired,
+    });
     setFormInputList(list);
 
     localStorage.setItem("inputList", JSON.stringify(list));
 
     setInputLabel("");
     setSelectedInput(NONE);
+    setIsRequired(false);
     setIsValid(false);
   }
 
@@ -95,6 +102,22 @@ const CreateForm = () => {
             valueKey="type"
           />
 
+          <div className={styles.create_form_row}>
+            <input
+              type="checkbox"
+              id="required-checkbox"
+              className={styles.create_form_input}
+              onChange={(e) => setIsRequired(e.target.checked ? true : false)}
+              checked={isRequired}
+            />
+            <label
+              htmlFor="required-checkbox"
+              className={styles.create_form_list_checkbox_label}
+            >
+              Required
+            </label>
+          </div>
+
           <button
             className="common_btn"
             disabled={isValid ? false : true}
@@ -105,12 +128,13 @@ const CreateForm = () => {
         </form>
 
         <ul className={styles.create_form_list}>
-          {formInputList?.map((item, idx) => (
-            <li key={idx}>
+          {formInputList?.map((item) => (
+            <li key={item.id}>
               <span className={styles.create_form_list_label}>
-                {item?.label}
+                {item.label}
               </span>
-              : {item?.type}
+              : {item.type}
+              {item.required ? ", required" : null}
             </li>
           ))}
         </ul>

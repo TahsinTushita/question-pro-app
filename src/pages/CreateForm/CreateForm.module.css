@@ -33,11 +33,13 @@
 
 .create_form_label {
   font-weight: bold;
+  text-transform: capitalize;
 }
 
 .create_form_input {
   height: 20px;
   outline-color: var(--primary-blue);
+  padding: 5px 10px;
 }
 
 .create_form_list {
@@ -49,6 +51,11 @@
 
 .create_form_list_label {
   font-weight: 600;
+  text-transform: capitalize;
+}
+
+.create_form_list_checkbox_label {
+  text-transform: capitalize;
 }
 
 @media (min-width: 600px) {

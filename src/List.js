@@ -8,8 +8,13 @@ export const statusList = [
 ];
 
 export const inputTypeList = [
-  { id: 301, type: "text", name: "301" },
-  { id: 302, type: "textarea", name: "302" },
+  { id: 301, type: "text" },
+  { id: 302, type: "textarea" },
+  { id: 303, type: "password" },
+  { id: 304, type: "email" },
+  { id: 305, type: "tel" },
+  { id: 306, type: "number" },
+  { id: 307, type: "date" },
   // { id: 303, type: "select / dropdown" },
   // { id: 304, type: "checkbox" },
   // { id: 305, type: "multiple choice" },
