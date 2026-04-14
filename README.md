@@ -20,13 +20,47 @@ This is a React application containing two features which are -
 - React Query
 - Axios
 
+
+## Explanation of my Approach
+  ### 1. Routing
+  - **Technology**: React Router
+  - I used the **BrowserRouter, Routes and Route** component in the App.jsx.
+  - In all the other pages, I used the **Link** component.
+    
+  ### 2. Fetch data
+  - **Technology**: Axios
+  - Created a file called fetchData.js in the api folder and fetched all data with the help of **Axios**.
+  - I also create a custom instance of Axios in the axios.js file and used that in the fetchData.js file.
+    
+  ### 3. Combine Todo list and User list
+  - In the fetchData.js file, I fetched both the todo list and the user list in the same function. Then I mapped the userId in the todo list with the username of the user list.
+  -  Finally I combined both the lists to create a new list where each list item has the properties of id, title, username and status where the status is "Completed" is the complete property in the todo list true and otherwise it is set to "Pending". This is the list that I worked with in the Todo List page.
+
+  ### 4. State Management and Persistence
+  - **Technology**: React Query, useState, localstorage
+  - **React Query Setup:**
+      - I created a react-query folder with two files inside. The **queryClient.js** file creates a react query client and the **persister.js** file creates async storage persister using the localstorage as the storage to persist the state of the application.
+      - Then in the **main.jsx **file, I imported the **PersistQueryClientProvider**, wrapped the App component with it and sent the afore mentioned queryClient and persister as props. This makes sure that the state managed and persisted by React Query will be available to the App component including all its children.
+  - **Todo List page:**
+      - I fetched the todo list and the user list and placed them in **React Query** states called **todoList** and **userList**.
+      - After filtering the list according to the set filters, the data is further stored in a **React Query** state called **filteredList** which is persisted and rendered in the app.
+      - For pagination, a state called **currentPage** is stored in **React Query** which represents the current page number.
+  - **Build Form page:**
+      - I used the **useState** hook for all of the state and the **localStorage** for the **formInputList** state which is the list of the input fields added to build the form.
+  - **Preview Form page:**
+      - Just like the Build Form page, I used **useState** and **localStorage** for the state management here.
+    
+
+
+
 ## Features
 
 This project is consisted of four pages. Each page has links at the top for navigating to other pages.
 
 ### 1. Home
+<img width="848" height="146" alt="home_img" src="https://github.com/user-attachments/assets/3857caf3-ac26-4b8e-87b1-af36d4ba82c7" />
 
-This page contains the links to other three pages.
+- This page contains the links to other three pages.
 
 ### 2. Todo List
 
@@ -80,4 +114,5 @@ This page contains the links to other three pages.
 ## Contributor
 
 Name: Kazi Tushita Tahsin
+
 Email: tahsintushita@gmail.com
