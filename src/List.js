@@ -1,4 +1,4 @@
-// page dedicated to lists
+// file dedicated to lists
 
 export const BUILD_FORM_URL = "/form-builder";
 export const PREVIEW_FORM_URL = "/form-preview";
