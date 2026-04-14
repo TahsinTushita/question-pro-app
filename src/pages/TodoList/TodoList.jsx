@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getTodoListWithUsername, getUserList } from "../../api/fetchData";
 import { statusList, BUILD_FORM_URL, PREVIEW_FORM_URL } from "../../List";
-import { Todo, Filter } from "../../components";
+import { Todo, Filter, Pagination } from "../../components";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import styles from "./TodoList.module.css";
@@ -95,38 +95,6 @@ const TodoList = () => {
 
   const totalPages = Math.ceil(filteredList.length / ITEMS_PER_PAGE);
 
-  // calculate page numbers for pagination
-  const getPageNumbers = () => {
-    const pages = [];
-    const maxVisible = 5; // how many numbers to show
-
-    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
-    let end = start + maxVisible - 1;
-
-    if (end > totalPages) {
-      end = totalPages;
-      start = Math.max(1, end - maxVisible + 1);
-    }
-
-    // Add first + ellipsis
-    if (start > 1) {
-      pages.push(1);
-      if (start > 2) pages.push("...");
-    }
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-
-    // Add ellipsis + last
-    if (end < totalPages) {
-      if (end < totalPages - 1) pages.push("...");
-      pages.push(totalPages);
-    }
-
-    return pages;
-  };
-
   // fetch user list for user filter
   const { data: userList = [] } = useQuery({
     queryKey: ["userList"],
@@ -195,48 +163,12 @@ const TodoList = () => {
         )}
       </ul>
 
-      {/* pagination controls */}
-      <div className={styles.todolist_pagination}>
-        <button
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage(currentPage - 1)}
-          className={styles.todolist_pagination_btn}
-        >
-          Prev
-        </button>
-
-        {/* page numbers */}
-        {getPageNumbers().map((page, index) =>
-          page === "..." ? (
-            <span
-              key={page + index}
-              className={styles.todolist_pagination_ellipsis}
-            >
-              ...
-            </span>
-          ) : (
-            <button
-              key={`page-${page}`}
-              onClick={() => setCurrentPage(page)}
-              className={
-                page === currentPage
-                  ? styles.todolist_pagination_activePage
-                  : ""
-              }
-            >
-              {page}
-            </button>
-          ),
-        )}
-
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage(currentPage + 1)}
-          className={styles.todolist_pagination_btn}
-        >
-          Next
-        </button>
-      </div>
+      {/* pagination  */}
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
     </section>
   );
 };
