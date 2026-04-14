@@ -11,6 +11,7 @@ const CreateForm = () => {
   const inputTypeLabel = "Input Type";
   const SELECT = "select";
   const CHECKBOX = "checkbox";
+  const MULTI_SELECT = "multi-select";
 
   const inputLabelRef = useRef();
 
@@ -54,7 +55,7 @@ const CreateForm = () => {
     setSelectedInput(selectedInput);
 
     // if input type is "select", show the add option portion
-    if (selectedInput === SELECT) {
+    if (selectedInput === SELECT || selectedInput === MULTI_SELECT) {
       setIsOptionNeeded(true);
     } else {
       setIsOptionNeeded(false);
@@ -96,13 +97,20 @@ const CreateForm = () => {
       name: inputId,
       label: inputLabel,
       type: selectedInput,
-      value: selectedInput === CHECKBOX ? inputLabel : "",
+      value:
+        selectedInput === CHECKBOX
+          ? inputLabel
+          : selectedInput === MULTI_SELECT
+            ? []
+            : "",
       checked: false,
       required: isRequired,
       options:
         selectedInput === SELECT && options.length > 1
           ? [{ oid: 1, value: "", name: "None" }, ...options]
-          : [],
+          : selectedInput === MULTI_SELECT && options.length > 1
+            ? [{ oid: 1, value: "", name: "None" }, ...options]
+            : [],
     });
     setFormInputList(list);
 
@@ -264,6 +272,15 @@ const CreateForm = () => {
                   : {item.type}
                   {item.required ? ", required" : null}
                   {item.type === SELECT && item.options.length ? (
+                    <span>
+                      , options({" "}
+                      {item.options.slice(1).map((option) => (
+                        <span key={option.oid}>{option.value} </span>
+                      ))}
+                      )
+                    </span>
+                  ) : null}
+                  {item.type === MULTI_SELECT && item.options.length ? (
                     <span>
                       , options({" "}
                       {item.options.slice(1).map((option) => (

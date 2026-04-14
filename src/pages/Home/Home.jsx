@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
+import { TODO_LIST_URL, BUILD_FORM_URL, PREVIEW_FORM_URL } from "../../List";
 
 import styles from "./Home.module.css";
-
-const TODO_URL = "/todos";
-const CREATE_FORM_URL = "/form-builder";
-const PREVIEW_FORM_URL = "/form-preview";
 
 const Home = () => {
   return (
@@ -13,12 +10,12 @@ const Home = () => {
 
       <div className={styles.home_btns}>
         <button className="common_btn">
-          <Link className="common_link" to={TODO_URL}>
+          <Link className="common_link" to={TODO_LIST_URL}>
             Todo List
           </Link>
         </button>
         <button className="common_btn">
-          <Link className="common_link" to={CREATE_FORM_URL}>
+          <Link className="common_link" to={BUILD_FORM_URL}>
             Build Form
           </Link>
         </button>

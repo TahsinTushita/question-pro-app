@@ -14,6 +14,7 @@ const PreviewForm = () => {
   const EMAIL = "email";
   const TEL = "tel";
   const NUMBER = "number";
+  const MULTI_SELECT = "multi-select";
 
   const [inputList, setInputList] = useState();
 
@@ -24,15 +25,23 @@ const PreviewForm = () => {
   }, []);
 
   // handle input field onChange
-  function handleInputChange(val, idx, type) {
+  function handleInputChange(e, idx, type) {
     const updatedList = [...inputList];
 
-    // if input is not a "checkbox" - update its value property
-    // but for a "checkbox" - update its checked property
-    if (type !== CHECKBOX) {
-      updatedList[idx].value = val;
-    } else {
+    if (type === CHECKBOX) {
       updatedList[idx].checked = !updatedList[idx].checked;
+    } else if (type === MULTI_SELECT) {
+      // get the option values
+      const options = [...e.target.options];
+
+      // filter the options that are selected, then map to get their values
+      const values = options
+        .filter((option) => option.selected)
+        .map((option) => option.value);
+
+      updatedList[idx].value = values;
+    } else {
+      updatedList[idx].value = e.target.value;
     }
 
     setInputList(updatedList);
@@ -94,9 +103,7 @@ const PreviewForm = () => {
                   id={item.id}
                   name={item.name}
                   value={item.value}
-                  onChange={(e) =>
-                    handleInputChange(e.target.value, idx, item.type)
-                  }
+                  onChange={(e) => handleInputChange(e, idx, item.type)}
                   checked={item.checked}
                   className={styles.preview_form_checkbox_field}
                 />
@@ -113,6 +120,9 @@ const PreviewForm = () => {
               <div key={item.id} className={styles.preview_form_row}>
                 <label htmlFor={item.id} className={styles.preview_form_label}>
                   {item.label}
+                  {item.required ? (
+                    <span className={styles.preview_form_required}>*</span>
+                  ) : null}
                 </label>
                 {/* textarea */}
                 {item.type === TEXTAREA ? (
@@ -121,9 +131,7 @@ const PreviewForm = () => {
                     name={item.name}
                     className={styles.preview_form_textarea}
                     value={item.value}
-                    onChange={(e) =>
-                      handleInputChange(e.target.value, idx, item.type)
-                    }
+                    onChange={(e) => handleInputChange(e, idx, item.type)}
                     required={item.required}
                   />
                 ) : // select
@@ -131,9 +139,7 @@ const PreviewForm = () => {
                   <select
                     name={item.name}
                     id={item.id}
-                    onChange={(e) =>
-                      handleInputChange(e.target.value, idx, item.type)
-                    }
+                    onChange={(e) => handleInputChange(e, idx, item.type)}
                     className={styles.preview_form_input_field}
                     required={item.required}
                   >
@@ -143,6 +149,29 @@ const PreviewForm = () => {
                       </option>
                     ))}
                   </select>
+                ) : // multi-select
+                item.type === MULTI_SELECT ? (
+                  <div className={styles.preview_form_multiselect}>
+                    <select
+                      name={item.name}
+                      id={item.id}
+                      onChange={(e) => handleInputChange(e, idx, item.type)}
+                      className={styles.preview_form_input_field}
+                      required={item.required}
+                      multiple
+                    >
+                      {item.options.map((option) => (
+                        <option key={option.oid} value={option.value}>
+                          {option.name}
+                        </option>
+                      ))}
+                    </select>
+                    <p className={styles.preview_form_multiselect_info}>
+                      *To select multiple options, press down{" "}
+                      <strong>ctrl</strong> for windows or <strong>cmd</strong>{" "}
+                      for mac and then select the option
+                    </p>
+                  </div>
                 ) : // text, password, email, tel, number
                 item.type === TEXT || PASSWORD || EMAIL || TEL || NUMBER ? (
                   <input
@@ -151,9 +180,7 @@ const PreviewForm = () => {
                     name={item.name}
                     className={styles.preview_form_input_field}
                     value={item.value}
-                    onChange={(e) =>
-                      handleInputChange(e.target.value, idx, item.type)
-                    }
+                    onChange={(e) => handleInputChange(e, idx, item.type)}
                     required={item.required}
                   />
                 ) : null}

@@ -25,6 +25,22 @@
   align-items: center;
 }
 
+.preview_form_required {
+  color: red;
+}
+
+.preview_form_multiselect {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  text-align: left;
+}
+
+.preview_form_multiselect_info {
+  font-size: 0.875rem;
+  margin: 0;
+}
+
 .preview_form_checkbox_field {
   width: 15px;
   height: 15px;

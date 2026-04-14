@@ -19,4 +19,5 @@ export const inputTypeList = [
   { id: 307, type: "date" },
   { id: 308, type: "select" },
   { id: 309, type: "checkbox" },
+  { id: 310, type: "multi-select" },
 ];
