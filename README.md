@@ -24,11 +24,11 @@ This is a React application containing two features which are -
 ## Explanation of my Approach
   ### 1. Routing
   - **Technology**: React Router
-  - I used the **BrowserRouter, Routes and Route** component in the App.jsx.
+  - I used the **BrowserRouter, Routes and Route** component in the App.jsx for routing all components.
   - In all the other pages, I used the **Link** component.
     
   ### 2. Fetch data
-  - **Technology**: Axios
+  - **Technology:** Axios
   - Created a file called fetchData.js in the api folder and fetched all data with the help of **Axios**.
   - I also create a custom instance of Axios in the axios.js file and used that in the fetchData.js file.
     
@@ -37,30 +37,88 @@ This is a React application containing two features which are -
   -  Finally I combined both the lists to create a new list where each list item has the properties of id, title, username and status where the status is "Completed" is the complete property in the todo list true and otherwise it is set to "Pending". This is the list that I worked with in the Todo List page.
 
   ### 4. State Management and Persistence
-  - **Technology**: React Query, useState, localstorage
+  - **Technology:** React Query, useState, localstorage
   - **React Query Setup:**
       - I created a react-query folder with two files inside. The **queryClient.js** file creates a react query client and the **persister.js** file creates async storage persister using the localstorage as the storage to persist the state of the application.
-      - Then in the **main.jsx **file, I imported the **PersistQueryClientProvider**, wrapped the App component with it and sent the afore mentioned queryClient and persister as props. This makes sure that the state managed and persisted by React Query will be available to the App component including all its children.
+      - Then in the **main.jsx** file, I imported the **PersistQueryClientProvider**, wrapped the App component with it and sent the afore mentioned queryClient and persister as props. This makes sure that the state managed and persisted by React Query will be available to the App component including all its children.
   - **Todo List page:**
       - I fetched the todo list and the user list and placed them in **React Query** states called **todoList** and **userList**.
-      - After filtering the list according to the set filters, the data is further stored in a **React Query** state called **filteredList** which is persisted and rendered in the app.
+      - After filtering the list according to the set filters, the data is further stored in a **React Query** state called **filteredList** which is persisted, paginated and rendered in the app.
       - For pagination, a state called **currentPage** is stored in **React Query** which represents the current page number.
   - **Build Form page:**
       - I used the **useState** hook for all of the state and the **localStorage** for the **formInputList** state which is the list of the input fields added to build the form.
+      - After an input field is added, the formInputList updates and the updated list is set to the localStorage.
   - **Preview Form page:**
       - Just like the Build Form page, I used **useState** and **localStorage** for the state management here.
+      - The main state here is the **inputList** state which receives its value from the localStorage list that we set at the Build Form page.
+   
+   ### 5. Filtering
+   - **Technology:** React Query
+   - The list of todos in the Todo List page can be filtered by **username** and **status**.
+   - The **React Query** states used to store the selected username, selected status and filtered list are **selectedUser**, **selectedStatus** and **filteredList** respectively and all of these states are persisted meaning we set a filter value in this page, go visit another page and come back to visit this to find the same filter value and the filtered list is still there.
+   - There are also functions called **setSelectedUser** and **setSelectedStatus** using the queryClient to set these values.
+   - A custom Filter component is used to filter the values.
+   - The filtering logic is that if only a username is selected then the list is filtered by only username, if only a status is select then it the list is filtered by only status. However, if both values are selected, the list is filtered using both the username and the status.
+
+  ### 6. Pagination
+  - **Technology:** React Query, useState, useEffect
+  - The pagination controls are at the bottom of the Todo List page where the page numbers can be seen.
+  - The background of the current page is blue and each page contains 10 list items.
+  - Even though the first and the last page numbers are always visible, the numbers portion show a maximum of five page numbers at a time. The other pages are replaced with dots.
+  - A **React Query** state called **currentPage** is used to store the current page number of the app and the function which updates this state is **setCurrentPage**.
+  - **currentPage** value is updated in a **useEffect** hook depending on the **selectedUser** and **selectedStatus** states so that filtered items can be paginated as well.
+  - There is a **paginatedList** const which returns the list of items for current page after slicing the filteredList. This const depends on the **filteredList** and **currentPage** state and is memoized using the **useMemo** hook for faster calculation results. This paginatedList is rendered in the Todo List page.
+  - The other const is the **totalPages** which calculates the number of pages needed to show the list.
+  - A custom **component** called **Pagination** is used to render the pagination controls and it takes the **currentPage**, **setCurrentPage** and **totalPages** as **props**.
+  - Inside the Pagination component, a function called **getPageNumbers** is used to get the page numbers which are shown at the bottom. Every time the **currentPage** and the **totalPages** prop value change, this function is called in the **useEffect** to set the value of the **pageNumbers** state stored using **useState**.
+  - The **pageNumbers** list is then iterated and rendered in the component.
+
+  ### 7. Form Builder
+  - **Technology:** useState, localStorage, useEffect
+  - In the Build Form page, I created a form which consists of a text input filed labeled "label" to add the label for the input field we want to add, a select for the input type and a required checkbox to indicate whether the input field should be required or not.
+  - If the selected input type is a **"select"** or **"multi-select"**, another text input field with a button labeled "Add Option" appears to take option inputs for the select input. The "Add Option" button is disabled as long as the "option" input field is empty.
+  - There is a button labeled "Add Input Field" which adds the input field to the **formInputField** list state stored using **useState** and sets the updated formInputField list to the **localStorage** so that it is available in the Preview Form page. This button is disabled as long as the form is not valid.
+  - The **label** input field and the **select** input type fields are **required** and the **option** input field is **required** is well if the seledted input type is **select** or **multi-select**. Unless these fields are filled, the form is not valid and can not be submitted and this validation is checked inside a **useEffect** hook.
+  - After submission, the input field is added to the **formInputList** and this list is displayed underneath the form. The form is then reset.
+  - Each list item has a button labeled **Remove** which upon clicking, removed the input field from both **formInputList** and the **localStorage**. The list item shows the label of the field, the input type, if the field is required and the list of options if there are options for field.
+  - All the other states required to make the Build Form page work are managed with **useState**.
+  - In the **initial render**, the previously saved form input list is fetched from the **localStorage** inside a **useEffect** hook and set to the **formInputList** state. 
+
+  ### 8. Preview Form
+  - **Technology:** useState, localStorage, useEffect
+  - In the Preview Form page, I fetch the saved form configuration from the **localStorage** on the **initial render** inside a **useEffect** hook and store them in the **useState** state **inputList**.
+  - The **formList** is rendered in this page.
+  - The form fields can be filled and the value changed are handled by a **handler function** and the **formList** is updated whenever such a change takes place.
+  - If a field is required, a red "*" is shown on the right side of its label and the form can not be submitted until all the required fields are all filled.
+  - Upon submission, the input field values are printed in the console and the form is reset.
+
+  ### 9. Modular CSS
+  - For most of the components, I used separate css files titled "FileName.module.css", imported them as `import styles from "./FileName.module.css";` and used the classes.
+  - I placed the css classes which are used across all the components inside the **index.css** file.
+
+  ### 10. Folder Structure
+  <img width="292" height="471" alt="folder_structure_img" src="https://github.com/user-attachments/assets/37a5f72d-5967-424c-90af-2dba1fc3e027" />
+
+  - **node_modules:** Contains all the dependencies for the app.
+  - **public:** Used for storing assets and is currently empty.
+  - **src:** This is where the source code is written. It has several other folders inside it.
+      - **api:** This folder contains two files **axios.js** and **fetchData.js** which are used to fetch data from the api.
+      - **assets:** Used for storing assets and is currently empty.
+      - **components:** This folder contains all the **reusable components** which in this app are **Filter**, **Pagination** and **Todo**. If a component has their own module.css file, then that component has its own folder with the jsx and the module.css file. There is an **index.jsx** file in this folder where all the components are imported and then exported. It acts as the entry point for this folder and using this, we can easily import the components in other folders from one place.
+      - **pages:** It contains all the pages we can route to in the app. This is set up the **same way** as the **components folder** and contains the **CreateForm, Home, PreviewForm, TodoList** and **NotFound** pages.
+      - ****
     
 
 
 
 ## Features
 
-This project is consisted of four pages. Each page has links at the top for navigating to other pages.
+This project is consisted of four pages. Each page has buttons at the top for navigating to other pages.
 
 ### 1. Home
 <img width="848" height="146" alt="home_img" src="https://github.com/user-attachments/assets/3857caf3-ac26-4b8e-87b1-af36d4ba82c7" />
 
-- This page contains the links to other three pages.
+- This page contains buttons which can be used to route to the other three pages.
 
 ### 2. Todo List
 
@@ -84,8 +142,7 @@ This project is consisted of four pages. Each page has links at the top for navi
 - Pagination is implemented and being **managed** by **React Query** as well.
 
 ### 3. Build Form
-
-  <img width="657" height="797" alt="build_form_img" src="https://github.com/user-attachments/assets/cd46b922-a2f9-4315-b3af-ed4b62ec3a31" />
+  <img width="512" height="811" alt="build_form_img" src="https://github.com/user-attachments/assets/8a2bf8e7-a022-4145-818f-38459a619fca" />
 
 #### i. Add Input Field
 
@@ -101,9 +158,9 @@ This project is consisted of four pages. Each page has links at the top for navi
 - Input fields can be removed from the form using the remove button beside them. When they are removed from the form, they get removed from the **localstorage** as well.
 
 ### 4. Preview Form
+   <img width="699" height="839" alt="preview_form_img" src="https://github.com/user-attachments/assets/9ab2f49e-6706-4532-a106-f0d40d6deb98" />
+   <img width="613" height="206" alt="preview_form_console_img" src="https://github.com/user-attachments/assets/1b8d3ad1-ecc5-4ee6-bdcc-959405c1cc4e" />
 
-  <img width="783" height="753" alt="preview_form_img" src="https://github.com/user-attachments/assets/c0f2f68f-4979-4038-8dc0-7588c20fce9c" />
-  <img width="611" height="190" alt="preview_form_console_img" src="https://github.com/user-attachments/assets/c66356a3-2e05-44a5-9ca8-a4d140107467" />
 
 #### i. Fill the form and Submit
 
