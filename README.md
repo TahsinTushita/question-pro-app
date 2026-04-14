@@ -46,12 +46,12 @@ This is a React application containing two features which are -
   - **vite.config.js:** It is the config file for vite since this app was created with vite.
 
   ### 2. Routing
-  - **Technology**: React Router
+  - Used: **React Router**
   - I used the **BrowserRouter, Routes and Route** component in the App.jsx for routing all components.
   - In all the other pages, I used the **Link** component.
     
   ### 3. Fetch data
-  - **Technology:** Axios
+  - Used: **Axios**
   - Created a file called fetchData.js in the api folder and fetched all data with the help of **Axios**.
   - I also create a custom instance of Axios in the axios.js file and used that in the fetchData.js file.
     
@@ -60,7 +60,7 @@ This is a React application containing two features which are -
   -  Finally I combined both the lists to create a new list where each list item has the properties of id, title, username and status where the status is "Completed" is the complete property in the todo list true and otherwise it is set to "Pending". This is the list that I worked with in the Todo List page.
 
   ### 5. State Management and Persistence
-  - **Technology:** React Query, useState, localstorage
+  - Used: **React Query, useState, localstorage**
   - **React Query Setup:**
       - I created a react-query folder with two files inside. The **queryClient.js** file creates a react query client and the **persister.js** file creates async storage persister using the localstorage as the storage to persist the state of the application.
       - Then in the **main.jsx** file, I imported the **PersistQueryClientProvider**, wrapped the App component with it and sent the afore mentioned queryClient and persister as props. This makes sure that the state managed and persisted by React Query will be available to the App component including all its children.
@@ -76,7 +76,7 @@ This is a React application containing two features which are -
       - The main state here is the **inputList** state which receives its value from the localStorage list that we set at the Build Form page.
    
    ### 6. Filtering
-   - **Technology:** React Query
+   - Used: **React Query**
    - The list of todos in the Todo List page can be filtered by **username** and **status**.
    - The **React Query** states used to store the selected username, selected status and filtered list are **selectedUser**, **selectedStatus** and **filteredList** respectively and all of these states are persisted meaning we set a filter value in this page, go visit another page and come back to visit this to find the same filter value and the filtered list is still there.
    - There are also functions called **setSelectedUser** and **setSelectedStatus** using the queryClient to set these values.
@@ -84,7 +84,7 @@ This is a React application containing two features which are -
    - The filtering logic is that if only a username is selected then the list is filtered by only username, if only a status is select then it the list is filtered by only status. However, if both values are selected, the list is filtered using both the username and the status.
 
   ### 7. Pagination
-  - **Technology:** React Query, useState, useEffect
+  - Used: **React Query, useState, useEffect**
   - The pagination controls are at the bottom of the Todo List page where the page numbers can be seen.
   - The background of the current page is blue and each page contains 10 list items.
   - Even though the first and the last page numbers are always visible, the numbers portion show a maximum of five page numbers at a time. The other pages are replaced with dots.
@@ -97,7 +97,7 @@ This is a React application containing two features which are -
   - The **pageNumbers** list is then iterated and rendered in the component.
 
   ### 8. Form Builder
-  - **Technology:** useState, localStorage, useEffect
+  - Used: **useState, localStorage, useEffect**
   - In the Build Form page, I created a form which consists of a text input filed labeled "label" to add the label for the input field we want to add, a select for the input type and a required checkbox to indicate whether the input field should be required or not.
   - If the selected input type is a **"select"** or **"multi-select"**, another text input field with a button labeled "Add Option" appears to take option inputs for the select input. The "Add Option" button is disabled as long as the "option" input field is empty.
   - There is a button labeled "Add Input Field" which adds the input field to the **formInputField** list state stored using **useState** and sets the updated formInputField list to the **localStorage** so that it is available in the Preview Form page. This button is disabled as long as the form is not valid.
@@ -108,7 +108,7 @@ This is a React application containing two features which are -
   - In the **initial render**, the previously saved form input list is fetched from the **localStorage** inside a **useEffect** hook and set to the **formInputList** state. 
 
   ### 9. Preview Form
-  - **Technology:** useState, localStorage, useEffect
+  - Used: **useState, localStorage, useEffect**
   - In the Preview Form page, I fetch the saved form configuration from the **localStorage** on the **initial render** inside a **useEffect** hook and store them in the **useState** state **inputList**.
   - The **formList** is rendered in this page.
   - The form fields can be filled and the value changed are handled by a **handler function** and the **formList** is updated whenever such a change takes place.
