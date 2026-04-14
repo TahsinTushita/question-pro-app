@@ -21,7 +21,7 @@ const Home = () => {
         </button>
         <button className="common_btn">
           <Link className="common_link" to={PREVIEW_FORM_URL}>
-            Preview & Submit Form
+            Preview Form
           </Link>
         </button>
       </div>

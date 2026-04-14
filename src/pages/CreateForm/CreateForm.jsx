@@ -54,7 +54,7 @@ const CreateForm = () => {
   function handleSelectInput(selectedInput, label) {
     setSelectedInput(selectedInput);
 
-    // if input type is "select", show the add option portion
+    // if input type is "select" or "multi-select", show the add option portion
     if (selectedInput === SELECT || selectedInput === MULTI_SELECT) {
       setIsOptionNeeded(true);
     } else {
@@ -69,7 +69,7 @@ const CreateForm = () => {
     }
   }
 
-  // add option to "select" input
+  // add option to "select" or "multi-select" input
   function handleAddOption(e) {
     e.preventDefault();
 
@@ -215,7 +215,7 @@ const CreateForm = () => {
             </div>
           ) : null}
 
-          {/* add option portion shown for "select" input */}
+          {/* add option portion shown for "select" or "multi-select" input */}
           {isOptionNeeded ? (
             <div className={styles.create_form_options_div}>
               <div className={styles.create_form_options_add}>
@@ -271,6 +271,7 @@ const CreateForm = () => {
                   </span>
                   : {item.type}
                   {item.required ? ", required" : null}
+                  {/* show options for "select" */}
                   {item.type === SELECT && item.options.length ? (
                     <span>
                       , options({" "}
@@ -280,6 +281,7 @@ const CreateForm = () => {
                       )
                     </span>
                   ) : null}
+                  {/* show options for multi-select */}
                   {item.type === MULTI_SELECT && item.options.length ? (
                     <span>
                       , options({" "}

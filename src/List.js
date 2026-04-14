@@ -3,6 +3,8 @@
 export const BUILD_FORM_URL = "/form-builder";
 export const PREVIEW_FORM_URL = "/form-preview";
 export const TODO_LIST_URL = "/todos";
+export const HOME_URL = "/";
+export const NOT_FOUND_URL = "*";
 
 export const statusList = [
   { id: 2001, status: "Completed" },

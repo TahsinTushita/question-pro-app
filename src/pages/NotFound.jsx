@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
+import { HOME_URL } from "../List";
 
 const NotFound = () => {
   return (
-    <section>
+    <section className="container">
       <h1>Not Found</h1>
-      <Link to="/">Go to Home page</Link>
+      <button className="common_btn">
+        <Link className="common_link" to={HOME_URL}>
+          Go to Home Page
+        </Link>
+      </button>
     </section>
   );
 };
