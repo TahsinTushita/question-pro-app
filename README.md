@@ -20,7 +20,7 @@ This is a React application containing containing two features which are -
 
 
 ## Description
-This project is consisted of four pages.
+This project is consisted of four pages. Each page has links at the top for navigating to other pages.
 
 ### 1. Home
 This page contains the links to other three pages.
