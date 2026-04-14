@@ -88,10 +88,12 @@ const CreateForm = () => {
   function handleAddInputField(e) {
     e.preventDefault();
 
+    const inputId = selectedInput + crypto.randomUUID();
+
     let list = [...formInputList];
     list.push({
-      id: selectedInput + (list.length + 1).toString(),
-      name: selectedInput + (list.length + 1).toString(),
+      id: inputId,
+      name: inputId,
       label: inputLabel,
       type: selectedInput,
       value: selectedInput === CHECKBOX ? inputLabel : "",
